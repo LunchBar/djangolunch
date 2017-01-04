@@ -1,0 +1,17 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.cache/
+*.py[cod]
+
+# SQLite3 database files:
+*.db
+*.sqlite3
+*.sqlite
+
+# environment setting file
+local.env
+
+# static files for testing
+*.html
+*.js
+*.css
