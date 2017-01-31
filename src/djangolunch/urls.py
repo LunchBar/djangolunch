@@ -13,9 +13,50 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+from rest_framework.routers import DefaultRouter
+from rest_framework_nested import routers
+import debug_toolbar
 
+from users.views import UserViewSet
+from restaurants.views import (
+    RestaurantViewSet,
+    MenuItemListViewSet,
+    MenuItemBesidesListViewSet,
+    MenuItemUpdateByRestaurantView,
+)
+
+# menuitem_list = MenuItemViewSet.as_view({
+#     'get': 'list'
+# })
+
+# menuitem_update_destroy = MenuItemBesidesListViewSet.as_view({
+#     # 'patch': 'partial_update',
+#     # 'delete': 'destroy'
+# })
+
+router = DefaultRouter()
+
+# api root
+router.register(r'users', UserViewSet)
+router.register(r'restaurants', RestaurantViewSet)
+router.register(r'menuitems', MenuItemBesidesListViewSet)
+
+# /restaurants/:restaurant_id/menuitems
+restaurants_router = routers.NestedSimpleRouter(router, r'restaurants', lookup='restaurant')
+restaurants_router.register(r'menuitems', MenuItemListViewSet)
+
+# minor feature for convenience
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^menuitems/price/$', MenuItemUpdateByRestaurantView.as_view()),
+]
+
+
+urlpatterns += [
+    url(r'^', include(router.urls)),
+    url(r'^', include(restaurants_router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^__debug__/', include(debug_toolbar.urls)),
+    # url(r'^admin/', admin.site.urls),
 ]

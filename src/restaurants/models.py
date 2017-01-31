@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 
-
 class Restaurant(models.Model):
 
     owner = models.ForeignKey(
@@ -14,7 +13,7 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=20)
     address = models.CharField(max_length=50, blank=True, default='')
     # a restaurant has a menu_picture or MenuItem records.
-    menu_picture = models.URLField(max_length=50, blank=True)    # TODO: Imgur
+    menu_picture = models.URLField(max_length=50, blank=True)
     note = models.TextField(blank=True, default='')
 
     def __str__(self):
