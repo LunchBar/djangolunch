@@ -26,6 +26,11 @@ from restaurants.views import (
     MenuItemBesidesListViewSet,
     MenuItemUpdateByRestaurantView,
 )
+from polls.views import (
+    QuestionViewSet,
+    ChoiceListViewSet,
+    ChoiceBesidesListViewSet,
+)
 
 # menuitem_list = MenuItemViewSet.as_view({
 #     'get': 'list'
@@ -42,10 +47,16 @@ router = DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'restaurants', RestaurantViewSet)
 router.register(r'menuitems', MenuItemBesidesListViewSet)
+router.register(r'questions', QuestionViewSet)
+router.register(r'choices', ChoiceBesidesListViewSet)
 
 # /restaurants/:restaurant_id/menuitems
 restaurants_router = routers.NestedSimpleRouter(router, r'restaurants', lookup='restaurant')
 restaurants_router.register(r'menuitems', MenuItemListViewSet)
+
+# /questions/:question_id/choices
+questions_router = routers.NestedSimpleRouter(router, r'questions', lookup='question')
+questions_router.register(r'choices', ChoiceListViewSet)
 
 # minor feature for convenience
 urlpatterns = [
@@ -56,6 +67,7 @@ urlpatterns = [
 urlpatterns += [
     url(r'^', include(router.urls)),
     url(r'^', include(restaurants_router.urls)),
+    url(r'^', include(questions_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
     # url(r'^admin/', admin.site.urls),
