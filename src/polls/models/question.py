@@ -19,7 +19,7 @@ class Choice(models.Model):
         related_name='choices'
     )
     choice = models.OneToOneField('restaurants.Restaurant', on_delete=models.CASCADE)
-    votes = models.IntegerField(default=0)
+    votes = models.PositiveSmallIntegerField(default=0)
     note = models.TextField(blank=True, default='')
 
     # def __str__(self):

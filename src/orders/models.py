@@ -1,25 +1,20 @@
 from django.conf import settings
 from django.db import models
+from django.contrib.auth.models import Group
 
-# Create your models here.
-
-class Order(models.Model):
-    customer = models.ForeignKey(
+class OrderGroup(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    member = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        null=True,
-        related_name='order'
+        related_name='group',
     )
+    is_leader = models.BooleanField(default=False)
     # any order will transfer to MenuItem first.
     item = models.ForeignKey(
         'restaurants.MenuItem',
         on_delete=models.CASCADE, # TODO: Umm...
-        related_name='order'
+        # related_name='order'
     )
     # count = models.IntegerField(default=1)
     note = models.TextField(blank=True, default='')
-
-    def __str__(self):
-        return '{customer} order {item} x{count}'.format(
-            customer=self.customer, item_name=self.item, count=self.count
-        )
