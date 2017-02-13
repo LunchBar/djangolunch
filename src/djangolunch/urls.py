@@ -19,7 +19,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
 import debug_toolbar
 
-from users.views import UserViewSet
+from users.views import UserAccountViewSet, OrderView
 from restaurants.views import (
     RestaurantViewSet,
     MenuItemListViewSet,
@@ -41,21 +41,23 @@ from polls.views import (
 #     # 'delete': 'destroy'
 # })
 
-router = DefaultRouter()
+root_router = DefaultRouter()
+
+# /account/:username
+root_router.register(r'account', UserAccountViewSet)
 
 # api root
-router.register(r'users', UserViewSet)
-router.register(r'restaurants', RestaurantViewSet)
-router.register(r'menuitems', MenuItemBesidesListViewSet)
-router.register(r'questions', QuestionViewSet)
-router.register(r'choices', ChoiceBesidesListViewSet)
+root_router.register(r'restaurants', RestaurantViewSet)
+root_router.register(r'menuitems', MenuItemBesidesListViewSet)
+root_router.register(r'questions', QuestionViewSet)
+root_router.register(r'choices', ChoiceBesidesListViewSet)
 
 # /restaurants/:restaurant_id/menuitems
-restaurants_router = routers.NestedSimpleRouter(router, r'restaurants', lookup='restaurant')
+restaurants_router = routers.NestedSimpleRouter(root_router, r'restaurants', lookup='restaurant')
 restaurants_router.register(r'menuitems', MenuItemListViewSet)
 
 # /questions/:question_id/choices
-questions_router = routers.NestedSimpleRouter(router, r'questions', lookup='question')
+questions_router = routers.NestedSimpleRouter(root_router, r'questions', lookup='question')
 questions_router.register(r'choices', ChoiceListViewSet)
 
 # minor feature for convenience
@@ -63,11 +65,17 @@ urlpatterns = [
     url(r'^menuitems/price/$', MenuItemUpdateByRestaurantView.as_view()),
 ]
 
-
+# explicitly route by APIview
 urlpatterns += [
-    url(r'^', include(router.urls)),
+    url(r'^order/$', OrderView.as_view()),
+]
+
+# implicitly route by ModelViewset
+urlpatterns += [
+    url(r'^', include(root_router.urls)),
     url(r'^', include(restaurants_router.urls)),
     url(r'^', include(questions_router.urls)),
+    # url(r'^', include(users_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
     # url(r'^admin/', admin.site.urls),
