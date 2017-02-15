@@ -12,4 +12,3 @@ class User(AbstractUser):
         # related_name='order'
     )
     order_note = models.TextField(blank=True, default='')
-    is_leader = models.BooleanField(default=False)

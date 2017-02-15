@@ -20,6 +20,7 @@ from rest_framework_nested import routers
 import debug_toolbar
 
 from users.views import UserAccountViewSet, OrderView
+from orders.views import OrderGroupViewSet
 from restaurants.views import (
     RestaurantViewSet,
     MenuItemListViewSet,
@@ -47,6 +48,7 @@ root_router = DefaultRouter()
 root_router.register(r'account', UserAccountViewSet)
 
 # api root
+root_router.register(r'groups', OrderGroupViewSet)
 root_router.register(r'restaurants', RestaurantViewSet)
 root_router.register(r'menuitems', MenuItemBesidesListViewSet)
 root_router.register(r'questions', QuestionViewSet)

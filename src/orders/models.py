@@ -19,4 +19,5 @@ class OrderForMenupic(models.Model):
     price = models.IntegerField()
 
 class OrderGroup(Group):
-    group_restaurant = models.OneToOneField('restaurants.Restaurant', on_delete=models.CASCADE)
+    restaurant = models.OneToOneField('restaurants.Restaurant', on_delete=models.CASCADE)
+    leader = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # TODO: delete behavior
