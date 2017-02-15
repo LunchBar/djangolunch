@@ -64,9 +64,8 @@ class MenuItemBesidesListViewSet(viewsets.GenericViewSet,
         add_price = data.get('price', None)
         # is_increment defaults to False
         is_increment = data.get('is_increment', False)
-        is_true = lambda value: bool(value) and value.lower() not in ('false', '0')
 
-        if is_true(is_increment) and add_price:
+        if is_increment and add_price:
             instance = self.get_object()
             price = instance.price
             request.data['price'] = price + add_price
@@ -87,9 +86,8 @@ class MenuItemUpdateByRestaurantView(generics.GenericAPIView):
 
         # is_increment defaults to False
         is_increment = data.get('is_increment', False)
-        is_true = lambda value: bool(value) and value.lower() not in ('false', '0')
 
-        if is_true(is_increment):
+        if is_increment:
             MenuItem.objects.filter(restaurant=restaurant_id).update(price=(F('price') + price))
         else:
             MenuItem.objects.filter(restaurant=restaurant_id).update(price=price)
