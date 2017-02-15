@@ -15,7 +15,7 @@ from .serializers import (
 )
 
 class RestaurantViewSet(viewsets.ModelViewSet):
-    queryset = Restaurant.objects.all().prefetch_related('menu_items')
+    queryset = Restaurant.objects.all()
     # serializer_class = RestaurantListSerializer
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 

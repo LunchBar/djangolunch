@@ -7,7 +7,7 @@ from .models import Question, Choice
 from .serializers import ChoiceSerializer, QuestionSerializer
 
 class QuestionViewSet(viewsets.ModelViewSet):
-    queryset = Question.objects.all().prefetch_related('choices')
+    queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
 class ChoiceListViewSet(viewsets.GenericViewSet): # note that this view is accessed by question item.
