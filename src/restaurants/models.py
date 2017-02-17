@@ -26,7 +26,6 @@ class MenuItem(models.Model):
     restaurant = models.ForeignKey(
         'Restaurant',
         on_delete=models.CASCADE,
-        null=True,
         related_name='menu_items'
     )
     name = models.CharField(max_length=20)
