@@ -6,9 +6,6 @@ class Question(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     note = models.TextField(blank=True, default='')
 
-    # def __str__(self):
-    #     return self.question_text
-
 class Choice(models.Model):
     class Meta:
         ordering = ['votes']
@@ -21,6 +18,3 @@ class Choice(models.Model):
     choice = models.OneToOneField('restaurants.Restaurant', on_delete=models.CASCADE)
     votes = models.PositiveSmallIntegerField(default=0)
     note = models.TextField(blank=True, default='')
-
-    # def __str__(self):
-    #     return self.choice

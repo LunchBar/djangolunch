@@ -31,7 +31,6 @@ class RestaurantViewSet(viewsets.ModelViewSet):
     "menu_picture" is a url field, and "menu_items" is a list of menuitem object.
     '''
     queryset = Restaurant.objects.all()
-    # serializer_class = RestaurantListSerializer
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_serializer_class(self):
@@ -150,24 +149,3 @@ class MenuItemUpdateByRestaurantView(generics.GenericAPIView):
         else:
             MenuItem.objects.filter(restaurant=restaurant_id).update(price=price)
         return Response(status=status.HTTP_200_OK)
-
-
-############################################################################################################
-
-    # def partial_update(self, request, pk=None):
-    #     # print('HI!!!')
-    #     # print(request.data)
-
-    #     # instance = self.get_object()
-    #     # instance.name = request.data.get("name")
-    #     # instance.save()
-
-    #     serializer = self.get_serializer(data=request.data, many=True, partial=True)
-    #     serializer.is_valid(raise_exception=True)
-    #     # print(serializer.data)
-    #     self.perform_update(serializer)
-
-    #     return Response('TEST!!!',
-    #             status=status.HTTP_400_BAD_REQUEST)
-    #     # return Response(serializer.data)
-    #     # return super(MenuItemBesidesListViewSet, self).partial_update(request)

@@ -35,14 +35,6 @@ from polls.views import (
 from rest_framework_swagger.views import get_swagger_view
 
 schema_view = get_swagger_view(title='LunchBar API')
-# menuitem_list = MenuItemViewSet.as_view({
-#     'get': 'list'
-# })
-
-# menuitem_update_destroy = MenuItemBesidesListViewSet.as_view({
-#     # 'patch': 'partial_update',
-#     # 'delete': 'destroy'
-# })
 
 root_router = DefaultRouter()
 
@@ -79,7 +71,6 @@ urlpatterns += [
     url(r'^', include(root_router.urls)),
     url(r'^', include(restaurants_router.urls)),
     url(r'^', include(questions_router.urls)),
-    # url(r'^', include(users_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
     url(r'^api/$', schema_view)
