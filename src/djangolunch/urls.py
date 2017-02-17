@@ -32,7 +32,9 @@ from polls.views import (
     ChoiceListViewSet,
     ChoiceBesidesListViewSet,
 )
+from rest_framework_swagger.views import get_swagger_view
 
+schema_view = get_swagger_view(title='LunchBar API')
 # menuitem_list = MenuItemViewSet.as_view({
 #     'get': 'list'
 # })
@@ -80,5 +82,6 @@ urlpatterns += [
     # url(r'^', include(users_router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
+    url(r'^api/$', schema_view)
     # url(r'^admin/', admin.site.urls),
 ]

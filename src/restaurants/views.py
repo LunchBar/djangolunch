@@ -15,6 +15,21 @@ from .serializers import (
 )
 
 class RestaurantViewSet(viewsets.ModelViewSet):
+    '''
+    Question endpoint
+
+    create:
+    Question endpoint
+
+    ---
+    required parameter:
+
+    "name": restaurant name
+
+    "menu_picture" or "menu_items": you should specify one of them or both.
+
+    "menu_picture" is a url field, and "menu_items" is a list of menuitem object.
+    '''
     queryset = Restaurant.objects.all()
     # serializer_class = RestaurantListSerializer
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -40,7 +55,11 @@ class RestaurantViewSet(viewsets.ModelViewSet):
 #         fields = ['restaurant_id']
 
 
-class MenuItemListViewSet(viewsets.GenericViewSet): # note that this view is accessed by restaurant item.
+class MenuItemListViewSet(viewsets.GenericViewSet):
+    '''
+    list:
+    restaurants endpoint
+    '''
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemRelatedSerializer
     # filter_class = MenuItemFilter
@@ -55,6 +74,32 @@ class MenuItemBesidesListViewSet(viewsets.GenericViewSet,
                                     mixins.CreateModelMixin,
                                     mixins.UpdateModelMixin,
                                     mixins.DestroyModelMixin):
+    '''
+    menuitems endpoint except GET
+
+    create:
+    menuitems endpoint except GET
+
+    ---
+    required parameter:
+
+    "name": item name
+
+    "price": item price
+
+    "restaurant": restaurant id
+
+    list:
+    This is for developing. please use /restaurants/{restaurant_pk}/menuitems/
+
+    partial_update:
+    menuitems endpoint except GET
+
+    ---
+    An optional parameter for convenience:
+
+    "is_increment": set to true while specifying "price" field as an addition. default is false.
+    '''
     queryset = MenuItem.objects.all()
     serializer_class = MenuItemRelatedSerializer
 
@@ -73,6 +118,19 @@ class MenuItemBesidesListViewSet(viewsets.GenericViewSet,
         return super(MenuItemBesidesListViewSet, self).partial_update(request)
 
 class MenuItemUpdateByRestaurantView(generics.GenericAPIView):
+    '''
+    patch:
+    Update ALL items in a restaurant
+
+    ---
+    required parameter:
+
+    "restaurant": restaurant id
+
+    An optional parameter for convenience:
+
+    "is_increment": set to true while specifying "price" field as an addition. default is false.
+    '''
     serializer_class = MenuItemRelatedSerializer
 
     def patch(self, request, *args, **kwargs):

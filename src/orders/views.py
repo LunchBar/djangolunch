@@ -12,6 +12,19 @@ class OrderGroupViewSet(viewsets.GenericViewSet,
                     mixins.CreateModelMixin,
                     mixins.RetrieveModelMixin,
                     mixins.DestroyModelMixin):
+    '''
+    order group endpoint.
+
+    create:
+    order group endpoint.
+
+    ---
+    required parameter:
+
+    "restaurant": selected restaurant id
+
+    "name": selected restaurant name
+    '''
     queryset = OrderGroup.objects.all()
 
     def get_serializer_class(self):
