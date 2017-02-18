@@ -1,0 +1,11 @@
+[
+{
+    "model": "orders.orderformenupic",
+    "pk": 5,
+    "fields": {
+        "user": 1,
+        "name": "\u5e73",
+        "price": 100
+    }
+}
+]

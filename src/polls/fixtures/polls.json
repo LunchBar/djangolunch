@@ -1,0 +1,21 @@
+[
+{
+    "model": "polls.question",
+    "pk": 1,
+    "fields": {
+        "question_text": "\u4e0b\u79ae\u62dc\u5477\u8766\u7c73?",
+        "pub_date": "2017-02-01T06:44:57.218Z",
+        "note": "hello!!"
+    }
+},
+{
+    "model": "polls.choice",
+    "pk": 1,
+    "fields": {
+        "question": 1,
+        "choice": 10,
+        "votes": 4,
+        "note": ""
+    }
+}
+]
