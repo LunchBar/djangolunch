@@ -16,10 +16,10 @@ from .serializers import (
 
 class RestaurantViewSet(viewsets.ModelViewSet):
     '''
-    Question endpoint
+    restaurants endpoint
 
     create:
-    Question endpoint
+    restaurants endpoint
 
     ---
     required parameter:
