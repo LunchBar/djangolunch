@@ -4,8 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import list_route, detail_route
 from rest_framework.views import APIView
 # from rest_framework import permissions
-# from django_filters.rest_framework import FilterSet
-# from django_filters import rest_framework as filters
+from django_filters.rest_framework import FilterSet
 
 from .models import Restaurant, MenuItem
 from .serializers import (
@@ -13,6 +12,13 @@ from .serializers import (
     RestaurantListSerializer,
     RestaurantBesidesListSerializer,
 )
+
+class RestaurantFilter(FilterSet):
+    class Meta:
+        model = Restaurant
+        fields = {
+            'name': ['contains'],
+        }
 
 class RestaurantViewSet(viewsets.ModelViewSet):
     '''
@@ -31,6 +37,8 @@ class RestaurantViewSet(viewsets.ModelViewSet):
     "menu_picture" is a url field, and "menu_items" is a list of menuitem object.
     '''
     queryset = Restaurant.objects.all()
+    filter_class = RestaurantFilter
+    filter_fields = ('name',)
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_serializer_class(self):
@@ -46,12 +54,6 @@ class RestaurantViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST)
         else:
             return super(RestaurantViewSet, self).create(request, *args, **kwargs)
-
-# class MenuItemFilter(filters.FilterSet):
-#     restaurant_id = filters.NumberFilter(name='restaurant')
-#     class Meta:
-#         model = MenuItem
-#         fields = ['restaurant_id']
 
 
 class MenuItemListViewSet(viewsets.GenericViewSet):
