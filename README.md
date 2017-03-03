@@ -1,12 +1,19 @@
 # djangolunch
-## LunchBar backend (django version)
+LunchBar backend (django version)
 
----
-# Requirements
+## Requirements
 
-Python 3.5
+- Python 3.5
+- PostgreSQL
 
-# Environment Setup
+## PostgreSQL note
+
+Before migrating the database, remember to:
+
+- install PostgreSQL
+- copy `local.sample.env` to `local.env`, and modify `DATABASE_URL` in it
+
+## Environment Setup
 
 Create virtual environment and activate it:
 
@@ -39,5 +46,5 @@ Now, run server:
     python manage.py runserver
 
 And go to `127.0.0.1:8000/` to take a look!
-Note that you can go to `127.0.0.1:8000/api/` to get full API list.
 
+Note that you can go to `127.0.0.1:8000/api/` to get full API list.
