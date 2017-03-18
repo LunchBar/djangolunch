@@ -31,8 +31,6 @@ class OrderGroupViewSet(viewsets.GenericViewSet,
     required parameter:
 
     "restaurant": selected restaurant id
-
-    "name": selected restaurant name
     '''
     queryset = OrderGroup.objects.all()
 
@@ -52,12 +50,15 @@ class OrderGroupViewSet(viewsets.GenericViewSet,
 
     @detail_route(methods=['get'])
     def orders(self, request, pk=None):
+        '''
+        (for group leader) check out group orders
+        '''
         data = {}
 
         group = self.get_object()
         group_orders = group.orders
 
-        # for developing ?
+        # for developing only?
         s = NoteDetailSerializer(group_orders.all(), many=True)
         data['note_detail'] = s.data
 
@@ -74,6 +75,22 @@ class OrderViewSet(viewsets.GenericViewSet,
                     mixins.CreateModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.DestroyModelMixin):
+    '''
+    orders endpoint except GET
+
+    list:
+    This is for developing. please use /account/{username}/ to check personal order
+
+    create:
+    orders endpoint except GET
+
+    ---
+    required parameter:
+
+    "name", "price", "amount": trivial
+
+    "group": group id that orders belong to
+    '''
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 

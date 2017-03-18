@@ -13,12 +13,23 @@ from .serializers import UserSerializer, ChangePasswordSerializer
 class UserAccountViewSet(viewsets.GenericViewSet,
                         mixins.UpdateModelMixin,
                         mixins.RetrieveModelMixin):
+    '''
+    user account endpoint
+    '''
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'username'
 
     @detail_route(methods=['patch'])
     def deposit(self, request, username=None):
+        '''
+        Update the user's deposit
+
+        ---
+        An optional parameter for convenience:
+
+        "is_increment": set to true while specifying "deposit" field as an addition. default is false.
+        '''
         data = request.data
 
         add_deposit = data.get('deposit', None)
@@ -28,7 +39,7 @@ class UserAccountViewSet(viewsets.GenericViewSet,
         if is_increment and add_deposit:
             instance = self.get_object()
             deposit = instance.deposit
-            request.data['deposit'] = deposit + add_deposit # F expression ?
+            request.data['deposit'] = deposit + add_deposit
 
         return super(UserAccountViewSet, self).partial_update(request)
 
