@@ -14,8 +14,6 @@
         "is_active": true,
         "date_joined": "2017-01-13T14:56:45.279Z",
         "deposit": 403,
-        "order": null,
-        "order_note": "",
         "groups": [],
         "user_permissions": []
     }
@@ -35,8 +33,6 @@
         "is_active": true,
         "date_joined": "2017-01-13T16:31:10.665Z",
         "deposit": 300,
-        "order": null,
-        "order_note": "",
         "groups": [],
         "user_permissions": []
     }
@@ -56,8 +52,6 @@
         "is_active": true,
         "date_joined": "2017-01-14T04:06:18.106Z",
         "deposit": 0,
-        "order": null,
-        "order_note": "",
         "groups": [],
         "user_permissions": []
     }

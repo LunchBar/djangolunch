@@ -1,6 +1,6 @@
 [
 {
-    "model": "orders.orderformenupic",
+    "model": "orders.order",
     "pk": 5,
     "fields": {
         "user": 1,

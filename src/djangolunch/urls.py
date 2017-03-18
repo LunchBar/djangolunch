@@ -19,8 +19,8 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
 import debug_toolbar
 
-from users.views import UserAccountViewSet, OrderView
-from orders.views import OrderGroupViewSet
+from users.views import UserAccountViewSet
+from orders.views import OrderGroupViewSet, OrderViewSet
 from restaurants.views import (
     RestaurantViewSet,
     MenuItemListViewSet,
@@ -42,6 +42,7 @@ root_router = DefaultRouter()
 root_router.register(r'account', UserAccountViewSet)
 
 # api root
+root_router.register(r'orders', OrderViewSet)
 root_router.register(r'groups', OrderGroupViewSet)
 root_router.register(r'restaurants', RestaurantViewSet)
 root_router.register(r'menuitems', MenuItemBesidesListViewSet)
@@ -59,11 +60,6 @@ questions_router.register(r'choices', ChoiceListViewSet)
 # minor feature for convenience
 urlpatterns = [
     url(r'^menuitems/price/$', MenuItemUpdateByRestaurantView.as_view()),
-]
-
-# explicitly route by APIview
-urlpatterns += [
-    url(r'^order/$', OrderView.as_view()),
 ]
 
 # implicitly route by ModelViewset

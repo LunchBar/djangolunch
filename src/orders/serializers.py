@@ -2,12 +2,12 @@ from django.db import models
 from rest_framework import serializers
 
 from restaurants.models import Restaurant
-from .models import OrderForMenupic, OrderGroup
+from .models import Order, OrderGroup
 
-class OrderForMenupicSerializer(serializers.ModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OrderForMenupic
-        fields = ['user', 'name', 'price']
+        model = Order
+        fields = ['id', 'user', 'group', 'name', 'price', 'amount', 'note']
 
 class OrderGroupBesidesListSerializer(serializers.ModelSerializer):
     name = models.CharField(max_length=20)
@@ -24,3 +24,12 @@ class OrderGroupListSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderGroup
         fields = ['id', 'leader', 'restaurant', 'name']
+
+class NoteDetailSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='first_name',
+    )
+    class Meta:
+        model = Order
+        fields = ['user', 'name', 'amount', 'note']
